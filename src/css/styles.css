@@ -18,3 +18,33 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.country-list {
+  list-style: none;
+}
+
+.coutry-item {
+  display: flex;
+}
+
+.country-flag {
+  margin-right: 10px;
+}
+.card-name {
+  display: flex;
+}
+.card-flag {
+  margin-right: 10px;
+}
+
+.card-titles {
+  font-weight: bold;
+}
+
+.card-capital,
+.card-popilation,
+.card-languages,
+.card-name,
+.card-titles {
+  font-size: 23px;
+}
