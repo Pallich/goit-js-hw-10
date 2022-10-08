@@ -15,39 +15,34 @@ refs.input.addEventListener('input', debounce(getData, DEBOUNCE_DELAY));
 
 function getData(e) {
   if (refs.input.value === '') {
+    clearResults();
     return;
   }
 
   const inputValue = e.target.value.trim();
-  fetchCountries(inputValue)
-    .then(data => {
-      if (data.length > 10) {
-        console.log(data);
-        Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (data.length >= 2 && data.length < 10) {
-        markupList(data);
-      } else if (data.length == 1) {
-        markupCard(data);
-      }
-    })
-    .catch(function () {
-      console.console.log('404 Not Found');
-    });
+  fetchCountries(inputValue).then(data => {
+    if (data === 'error') {
+      Notify.failure('Oops, there is no country with that name');
+    } else if (data.length > 10) {
+      console.log(data);
+      Notify.info('Too many matches found. Please enter a more specific name.');
+    } else if (data.length >= 2 && data.length < 10) {
+      markupList(data);
+    } else if (data.length == 1) {
+      markupCard(data);
+    }
+  });
 }
 
 function markupList(data) {
   clearResults();
-  //   console.log('list markup', data);
+
   const list = data
     .map(el => {
-      //   console.log(el.name.official);
-      //   console.log(el.flags.svg);
       return `<li class="coutry-item"><img src="${el.flags.svg}" alt="flag of ${el.name.official}" class="country-flag" width = "50px"><p class="country-name">${el.name.official}</p></li>`;
     })
     .join(' ');
-  //   console.log(list);
+
   refs.list.innerHTML = list;
 }
 
